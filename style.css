@@ -1,0 +1,77 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('bg.png'); /* Ganti dengan jalur gambar Anda */
+    background-size: cover; /* Mengatur gambar agar menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+    color: #333;
+    margin: 30px;
+    padding: 0;
+}
+
+
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+h1 {
+    color: #e91e63; /* Pink utama */
+    margin: 10px 0;
+    text-shadow: 
+    -1px -1px 0 rgb(255, 255, 255),  
+     1px -1px 0 rgb(255, 255, 255),
+    -1px  1px 0 rgb(255, 255, 255),
+     1px  1px 0 rgb(236, 236, 236);
+}
+
+
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Mengatur tombol menjadi dalam satu blok vertikal */
+    align-items: center; /* Memusatkan tombol secara horizontal */
+    gap: 20px;
+    margin-top: 0px;
+}
+
+.button-box {
+    margin: 0;
+}
+
+button {
+    background-color: #e91e63; /* Warna utama pink */
+    color: white;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 15px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #976678; /* Warna pink lebih gelap untuk hover */
+}
+/* Media Query untuk ukuran layar HP */
+@media (max-width: 600px) {
+    body {
+        margin: 10px; /* Mengurangi margin pada layar kecil */
+    }
+
+    h1 {
+        font-size: 24px; /* Mengurangi ukuran font pada layar kecil */
+    }
+
+    button {
+        padding: 10px 20px; /* Mengurangi padding tombol */
+        font-size: 14px; /* Mengurangi ukuran font tombol */
+    }
+
+    .button-container {
+        gap: 15px; /* Mengurangi jarak antar tombol */
+    }
+}
+
+

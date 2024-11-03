@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="background-music" autoplay loop>
+        <source src="lagu.flac" type="audio/flac">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Menyertakan file JavaScript -->
+    <script src="audio.js"></script>
+    <button onclick="document.getElementById('background-music').play()">Play Music</button>
+
+    <div class="container">
+        <h1>Selamat Datang di</h1>
+        <h1>Tabora</h1>
+        <h1>Talk About GenRe with Zahra</h1>
+        <div class="button-wrap">
+            <div class="button-container">
+                <div class="button-box">
+                    <button onclick="location.href='materi.html'">Materi GenRe</button>
+                </div>
+                <div class="button-box">
+                    <button onclick="location.href='talk.html'">Talk with Zahra</button>
+                </div>
+                <div class="button-box">
+                    <button onclick="location.href='quiz.html'">Quizz with Jara</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

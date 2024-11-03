@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Pilihan Ganda</title>
+    <audio id="background-music" autoplay loop>
+        <source src="lagu.flac" type="audio/flac">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Menyertakan file JavaScript -->
+    <script src="audio.js"></script>
+    <button onclick="document.getElementById('background-music').play()">Play Music</button>
+    <style>
+        /* Style tetap sama seperti di atas */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('bg.png');
+            background-size: cover;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .quiz-container:hover {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .question {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #333333;
+        }
+        .answer {
+            display: block;
+            background-color: #f7f9fc;
+            border-radius: 8px;
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 1em;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .answer:hover {
+            background-color: #e1e8f0;
+        }
+        #submit-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        #submit-btn:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            display: none;
+            font-size: 1.2em;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+        #next-page-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        #next-page-btn:hover {
+            background-color: #218838;
+        }
+        @media (max-width: 600px) {
+            .quiz-container {
+                width: 90%; /* Sesuaikan lebar agar lebih kecil pada layar kecil */
+                padding: 20px; /* Kurangi padding */
+            }
+        
+            .question {
+                font-size: 1em; /* Kurangi ukuran font untuk pertanyaan */
+            }
+        
+            .answer {
+                font-size: 0.9em; /* Kurangi ukuran font untuk jawaban */
+                padding: 8px; /* Sesuaikan padding untuk ruang lebih kecil */
+            }
+        
+            #submit-btn, #next-page-btn {
+                padding: 10px 15px; /* Kurangi padding pada tombol */
+                font-size: 0.9em; /* Kurangi ukuran font pada tombol */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="quiz">
+        <div id="question" class="question"></div>
+        <div id="choices" class="choices"></div>
+        <button id="submit-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="result">
+        <h2>Hasil</h2>
+        <p id="score"></p>
+        <button id="next-page-btn" onclick="location.href='flower tree.html'">Hadiah untuk kamu</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { question: "Berapa usia ideal perempuan untuk menikah menurut BKKBN?", choices: ["21", "22", "25", "23"], answer: "21" },
+        { question: "Berapa usia ideal laki-laki untuk menikah menurut BKKBN?", choices: ["21", "22", "25", "23"], answer: "25" },
+        { question: "Menurut UU No.35 Tahun 2009, narkotika diklasifikasikan dengan berapa golongan?", choices: ["1 golongan", "2 golongan", "3 golongan", "4 golongan"], answer: "3 golongan" },
+        { question: "Menurut UU No.35 Tahun 2009, golongan yang dapat digunakan untuk pengobatan atau penelitian terdapat di golongan?", choices: ["golongan 1", "golongan 2", "golongan 3", "golongan 4"], answer: "golongan 3" },
+        { question: "Zat atau obat yang berasal dari tanaman maupun bukan tanaman, baik sintetis maupun bukan sintetis, yang dapat menurunkan kesadaran, menghilangkan rasa nyeri, dan menimbulkan ketergantungan disebut dengan?", choices: ["psikotropika", "narkotika", "zat adiktif", "HIV"], answer: "narkotika" },
+        { question: "Berapa usia remaja menurut BKKBN?", choices: ["10-20 tahun", "12-20 tahun", "17-25 tahun", "10-24 tahun"], answer: "10-24 tahun" },
+        { question: "BKKBN merupakan singkatan dari?", choices: ["Badan Kependudukan Keluarga Berencana Nasional", "Badan Kependidikan Keluarga Bersama Nasional", "Badan Kependudukan Keluarga Berencana Negara", "Badan Kearifan Keluarga Besar Nasional"], answer: "Badan Kependudukan Keluarga Berencana Nasional" },
+        { question: "PKBR merupakan singkatan dari?", choices: ["Penyiapan Kehidupan Bersama Remaja", "Penyiapan Kehidupan Berkeluarga Bersama Remaja", "Penyimpanan Keluarga Bersama Remaja", "Penyiapan Keluarga Besar Remaja"], answer: "Penyiapan Kehidupan Berkeluarga Bagi Remaja" },
+        { question: "Dibawah ini yang termasuk dalam TRIAD KRR, kecuali?", choices: ["NAPZA", "HIV/AIDS", "alkohol", "Seksualitas"], answer: "alkohol" },
+        { question: "GenRe merupakan singkatan dari?", choices: ["Generas Remaja", "Generasi Republik", "Generasi Remaja Nasional", "Generasi Berencana"], answer: "Generasi Berencana" },
+        { question: "Dibawah ini merupakan 8 fungsi keluarga, kecuali?", choices: ["Fungsi Agama", "Fungsi Nasional", "Fungsi Pendidikan", "Fungsi Sosial Budaya"], answer: "Fungsi Nasional" },
+        { question: "Gagal tumbuh pada anak juga disebut dengan kondisi?", choices: ["stunting", "anemia", "amnesia", "HIV"], answer: "stunting" },
+        { question: "Virus yang menyerang sistem kekebalan tubuh sehingga melemahkan kemampuan tubuh melawan infeksi dan penyakit merupakan pengertian dari?", choices: ["AIDS", "HIV", "Corona", "TBC"], answer: "HIV" },
+        { question: "Kondisi di mana tubuh tidak lagi memiliki kemampuan untuk melawan infeksi yang ditimbulkan disebut dengan kondisi?", choices: ["AIDS", "HIV", "Corona", "TBC"], answer: "AIDS" },
+        { question: "Di bawah ini yang merupakan media penularan HIV/AIDS, kecuali?", choices: ["Cairan Darah", "ASI", "Sperma", "Berpegangan Tangan"], answer: "Berpegangan Tangan" }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+
+    function showQuestion() {
+        document.getElementById("question").innerText = questions[currentQuestion].question;
+        
+        const choicesContainer = document.getElementById("choices");
+        choicesContainer.innerHTML = "";
+
+        questions[currentQuestion].choices.forEach(choice => {
+            const choiceElem = document.createElement("label");
+            choiceElem.className = "answer";
+            choiceElem.innerHTML = `
+                <input type="radio" name="choice" value="${choice}" style="display:none;"> ${choice}
+            `;
+            choicesContainer.appendChild(choiceElem);
+            choiceElem.addEventListener("click", () => {
+                document.querySelectorAll(".answer").forEach(e => e.style.backgroundColor = "#f7f9fc");
+                choiceElem.style.backgroundColor = "#d4e4ff";
+                choiceElem.querySelector("input").checked = true;
+            });
+        });
+    }
+
+    function nextQuestion() {
+        const selectedAnswer = document.querySelector('input[name="choice"]:checked');
+        if (selectedAnswer && selectedAnswer.value === questions[currentQuestion].answer) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById("quiz").style.display = "none";
+        document.getElementById("result").style.display = "block";
+        document.getElementById("score").innerText = `Nilai kamu adalah ${score}/15`;
+    }
+
+    showQuestion();
+</script>
+
+</body>
+</html>
